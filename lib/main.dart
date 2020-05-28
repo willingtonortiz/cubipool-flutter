@@ -1,12 +1,13 @@
-import 'package:cubipool/modules/auth/login/pages/login_page.dart';
-import 'package:cubipool/modules/auth/register/pages/register_page.dart';
+import 'package:cubipool/modules/home/pages/home_page.dart';
+import 'package:cubipool/modules/learn/dialog/dialogs_page.dart';
+import 'package:cubipool/modules/learn/qr_flutter/qr_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(App());
 }
 
-class MyApp extends StatelessWidget {
+class App extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -15,7 +16,7 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      routes: {'/': (context) => RegisterPage()},
+      routes: {'/': (context) => QrPage()},
     );
   }
 }
