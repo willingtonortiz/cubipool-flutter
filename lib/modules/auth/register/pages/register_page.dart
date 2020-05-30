@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 
 class RegisterPage extends StatefulWidget {
+	static const String route = '/register';
+
   @override
   _RegisterPageState createState() => _RegisterPageState();
 }

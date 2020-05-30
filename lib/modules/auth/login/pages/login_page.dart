@@ -1,6 +1,10 @@
+import 'package:cubipool/modules/auth/register/pages/register_page.dart';
+import 'package:cubipool/modules/home/pages/home_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatefulWidget {
+	static const String route = '/login';
+
   @override
   _LoginPageState createState() => _LoginPageState();
 }
@@ -85,8 +89,11 @@ class _LoginPageState extends State<LoginPage> {
               ),
               color: Theme.of(context).primaryColor,
               onPressed: () {
-                checkUsernameInput();
-                // testIsUsernameValid();
+                // checkUsernameInput();
+
+								// TODO: La siguiente pagina no puede tener boton de regreso
+								// TODO: ESta página debe eliminarse y volver a acceder
+                // Navigator.of(context).pushNamed(HomePage.route);
               },
             ),
             SizedBox(
@@ -100,7 +107,7 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               onTap: () {
-                debugPrint("Go to register page");
+                Navigator.of(context).pushNamed(RegisterPage.route);
               },
             )
           ],

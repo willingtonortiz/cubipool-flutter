@@ -1,6 +1,6 @@
+import 'package:cubipool/modules/auth/login/pages/login_page.dart';
+import 'package:cubipool/modules/auth/register/pages/register_page.dart';
 import 'package:cubipool/modules/home/pages/home_page.dart';
-import 'package:cubipool/modules/learn/dialog/dialogs_page.dart';
-import 'package:cubipool/modules/learn/qr_flutter/qr_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -12,11 +12,17 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Cubipool APP',
+			debugShowCheckedModeBanner: false,
       theme: ThemeData(
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      routes: {'/': (context) => QrPage()},
+      initialRoute: '/login',
+      routes: {
+        LoginPage.route: (context) => LoginPage(),
+        RegisterPage.route: (context) => RegisterPage(),
+        HomePage.route: (context) => HomePage(),
+      },
     );
   }
 }
