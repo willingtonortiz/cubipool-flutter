@@ -5,7 +5,7 @@ import 'package:curved_navigation_bar/curved_navigation_bar.dart';
 import 'package:flutter/material.dart';
 
 class HomePage extends StatefulWidget {
-	static const String route = '/home';
+  static const String route = '/home';
 
   @override
   _HomePageState createState() => _HomePageState();
@@ -13,14 +13,14 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   var pages = [SharingPage(), ReservationPage(), ProfilePage()];
-  var currentIndex = 0;
+  var currentIndex;
   var currentPage = null;
   GlobalKey _bottomNavigationKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
-    currentIndex = 1;
+    currentIndex = 0;
     currentPage = pages[currentIndex];
   }
 

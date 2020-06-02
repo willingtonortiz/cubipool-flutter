@@ -20,11 +20,14 @@ class _ProfilePageState extends State<ProfilePage> {
           children: <Widget>[
             Container(
               margin: const EdgeInsets.all(16.0),
-              color: Colors.black,
               child: CircleAvatar(
-                backgroundImage: AssetImage('assets/images/upc_logo.png'),
                 radius: 50.0,
-                backgroundColor: Colors.black,
+                backgroundColor: Colors.grey[400],
+                child: Icon(
+                  Icons.person,
+                  size: 80.0,
+                  color: Colors.black38,
+                ),
               ),
             ),
             Text(
@@ -58,8 +61,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       leading: Icon(Icons.star),
                       trailing: Icon(Icons.chevron_right),
                       onTap: () {
-												// TODO: Navegar hacia la siguiente pagina
-											},
+                        // TODO: Navegar hacia la siguiente pagina
+                      },
                     ),
                     Divider(
                       height: 0.0,
@@ -69,8 +72,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       leading: Icon(Icons.textsms),
                       trailing: Icon(Icons.chevron_right),
                       onTap: () {
-												// TODO: Navegar hacia la siguiente pagina
-											},
+                        // TODO: Navegar hacia la siguiente pagina
+                      },
                     ),
                     Divider(
                       height: 0.0,
@@ -80,8 +83,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       leading: Icon(Icons.book),
                       trailing: Icon(Icons.chevron_right),
                       onTap: () {
-												// TODO: Navegar hacia la siguiente pagina
-											},
+                        // TODO: Navegar hacia la siguiente pagina
+                      },
                     ),
                     Divider(
                       height: 0.0,
@@ -91,8 +94,8 @@ class _ProfilePageState extends State<ProfilePage> {
                       leading: Icon(Icons.book),
                       trailing: Icon(Icons.chevron_right),
                       onTap: () {
-												// TODO: Navegar hacia la siguiente pagina
-											},
+                        // TODO: Navegar hacia la siguiente pagina
+                      },
                     ),
                   ],
                 ),

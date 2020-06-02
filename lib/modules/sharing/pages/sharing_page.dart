@@ -1,4 +1,6 @@
-import 'package:curved_navigation_bar/curved_navigation_bar.dart';
+import 'package:cubipool/modules/sharing/pages/cubicle_detail_page.dart';
+import 'package:cubipool/modules/sharing/pages/cubicle_list_page.dart';
+import 'package:cubipool/modules/sharing/pages/search_page.dart';
 import 'package:flutter/material.dart';
 
 class SharingPage extends StatefulWidget {
@@ -16,7 +18,7 @@ class _SharingPageState extends State<SharingPage> {
         title: Text('Buscar cubículos compartidos'),
         centerTitle: true,
       ),
-			body: Text('GA'),
+      body: CubicleDetailPage(),
     );
   }
 }
