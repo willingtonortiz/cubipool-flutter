@@ -20,7 +20,7 @@ class _HomePageState extends State<HomePage> {
   @override
   void initState() {
     super.initState();
-    currentIndex = 0;
+    currentIndex = 1;
     currentPage = pages[currentIndex];
   }
 
@@ -38,7 +38,7 @@ class _HomePageState extends State<HomePage> {
 
     return CurvedNavigationBar(
       key: _bottomNavigationKey,
-      backgroundColor: iconsColor,
+      backgroundColor: Colors.white10,
       color: primaryColor,
       height: 50.0,
       animationDuration: Duration(milliseconds: 300),

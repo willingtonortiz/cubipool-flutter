@@ -1,3 +1,5 @@
+import 'package:cubipool/modules/reservation/pages/cubicle_detail_page.dart';
+import 'package:cubipool/modules/reservation/pages/cubicle_list_page.dart';
 import 'package:flutter/material.dart';
 
 class ReservationPage extends StatefulWidget {
@@ -15,6 +17,7 @@ class _ReservationPageState extends State<ReservationPage> {
         title: Text('Reservar cubículos'),
         centerTitle: true,
       ),
+      body: CubicleDetailPage(),
     );
   }
 }
