@@ -17,7 +17,7 @@ class App extends StatelessWidget {
         primarySwatch: Colors.red,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      initialRoute: HomePage.route,
+      initialRoute: LoginPage.route,
       routes: {
         LoginPage.route: (context) => LoginPage(),
         RegisterPage.route: (context) => RegisterPage(),
