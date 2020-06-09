@@ -150,10 +150,10 @@ class _RegisterPageState extends State<RegisterPage> {
           var password = passwordController.text;
 
           try {
-            var token = await AuthService.register(username, password);
+            await AuthService.register(username, password);
 
             showSuccessAlert(context);
-          } on Exception catch (e) {
+          } catch (e) {
             showSnackBar(context, 'Hubo un error al registrarse');
           }
         },

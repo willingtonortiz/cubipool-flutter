@@ -3,7 +3,6 @@ import 'package:cubipool/modules/home/pages/home_page.dart';
 import 'package:cubipool/services/auth/auth_service.dart';
 import 'package:cubipool/services/auth/auth_shared_preferences.dart';
 import 'package:flutter/material.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class LoginPage extends StatefulWidget {
   static const String route = '/login';
@@ -132,27 +131,29 @@ class _LoginPageState extends State<LoginPage> {
             return;
           }
 
-          var username = usernameController.text;
-          var password = passwordController.text;
+          var username = usernameController.text.trim();
+          var password = passwordController.text.trim();
 
-          // Realizando login
-          var token = await AuthService.login(username, password);
-          if (token == null) {
+          try {
+            // Realizando login
+            var token = await AuthService.login(username, password);
+
+            // Guardando el token del usuario en SharedPreferences
+            await AuthSharedPreferences.saveUserToken(token);
+
+            showMessage(context, token);
+
+						// Navegando al home
+            Navigator.pushReplacementNamed(context, HomePage.route);
+          } catch (e) {
             showMessage(context, 'Ocurrió un error en el api');
-            return;
           }
-
-          // Guardando el token del usuario en SharedPreferences
-          await AuthSharedPreferences.saveUserToken(token);
-
-          showMessage(context, token);
-          Navigator.pushReplacementNamed(context, HomePage.route);
         },
       );
 
   /* Logic */
   bool isUsernameValid() {
-    var username = usernameController.text;
+    var username = usernameController.text.trim();
     RegExp regExp = RegExp(r"^[uU]\d{4}\w{5}$", multiLine: false);
     return regExp.hasMatch(username);
   }
@@ -170,7 +171,7 @@ class _LoginPageState extends State<LoginPage> {
   }
 
   void testIsUsernameValid() {
-    usernameController.text = 'u20161C963';
+    usernameController.text = 'u20161C808';
     isUsernameValid();
   }
 

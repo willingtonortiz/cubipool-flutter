@@ -14,7 +14,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   var pages = [SharingPage(), ReservationPage(), ProfilePage()];
   var currentIndex;
-  var currentPage = null;
+  var currentPage;
   GlobalKey _bottomNavigationKey = GlobalKey();
 
   @override

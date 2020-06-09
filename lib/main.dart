@@ -1,6 +1,7 @@
 import 'package:cubipool/modules/auth/login/pages/login_page.dart';
 import 'package:cubipool/modules/auth/register/pages/register_page.dart';
 import 'package:cubipool/modules/home/pages/home_page.dart';
+import 'package:cubipool/modules/profile/rewards/pages/rewards_page.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
         LoginPage.route: (context) => LoginPage(),
         RegisterPage.route: (context) => RegisterPage(),
         HomePage.route: (context) => HomePage(),
+        RewardPage.route: (context) => RewardPage(),
       },
     );
   }
