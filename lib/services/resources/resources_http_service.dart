@@ -1,12 +1,12 @@
 import 'dart:convert';
 
-import 'package:cubipool/models/campus.dart';
 import 'package:http/http.dart' as http;
+import 'package:cubipool/models/resource.dart';
 
-class CampusHttpService {
-  static Future<List<Campus>> getAllCampus() async {
+class ResourceHttpService {
+  static Future<List<Resource>> getAllResources() async {
     var response = await http.get(
-      'http://10.0.2.2:5000/api/campus',
+      'http://10.0.2.2:5000/api/resources',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
@@ -15,7 +15,8 @@ class CampusHttpService {
 
     if (response.statusCode == 200) {
       List<dynamic> items = json.decode(response.body);
-      items = items.map((e) => Campus.fromJson(e)).toList();
+      items = items.map((e) => Resource.fromJson(e)).toList();
+
       return items;
     } else {
       throw Exception();

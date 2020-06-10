@@ -18,7 +18,7 @@ class _SharingPageState extends State<SharingPage> {
         title: Text('Buscar cubículos compartidos'),
         centerTitle: true,
       ),
-      body: CubicleDetailPage(),
+      body: SearchPage(),
     );
   }
 }

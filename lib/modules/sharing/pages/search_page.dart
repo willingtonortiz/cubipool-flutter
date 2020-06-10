@@ -1,7 +1,10 @@
 import 'package:cubipool/models/campus.dart';
-import 'package:cubipool/models/resource.dart';
+import 'package:cubipool/models/resource_type.dart';
+import 'package:cubipool/services/campus/campus_http_service.dart';
+import 'package:cubipool/services/resource_type/resource_type_http_service.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class SearchPage extends StatefulWidget {
   @override
@@ -9,45 +12,24 @@ class SearchPage extends StatefulWidget {
 }
 
 class _SearchPageState extends State<SearchPage> {
-  // TODO: Modificar por la llamada al api
-  List<Campus> campusList = [
-    Campus(id: 1, name: "Villa"),
-    Campus(id: 2, name: "Monterrico"),
-    Campus(id: 3, name: "San Miguel"),
-    Campus(id: 4, name: "San Isidro"),
-  ];
+  List<Campus> campusList = [];
   Campus selectedCampus;
 
-  // TODO: Modificar dependiendo de la hora
-  List<DateTime> startHourList = [
-    DateTime(2020, 6, 1),
-    DateTime(2020, 6, 2),
-    DateTime(2020, 6, 3),
-  ];
+  List<DateTime> startHourList = [];
   DateTime selectedStartHour;
 
-  // TODO: Modificar dependiendo de la hora de inicio
-  List<DateTime> endHourList = [
-    DateTime(2020, 6, 1),
-    DateTime(2020, 6, 2),
-    DateTime(2020, 6, 3),
-  ];
+  List<DateTime> endHourList = [];
   DateTime selectedEndHour;
 
-  // TODO: Modificar por la llamada al api
-  List<Resource> resourceList = [
-    Resource(id: 1, name: "IMac"),
-    Resource(id: 2, name: "Televisor"),
-    Resource(id: 3, name: "Pizarra"),
-  ];
-  Resource selectedResource;
+  List<ResourceType> resourceList = [];
+  ResourceType selectedResource;
 
   @override
   void initState() {
-//    selectedCampus = campusList[0];
-//    selectedStartHour = startHourList[0];
-//    selectedEndHour = endHourList[0];
     super.initState();
+    fetchCampusList();
+    fetchResourceList();
+    initializeStartHourDropdown();
   }
 
   @override
@@ -131,7 +113,7 @@ class _SearchPageState extends State<SearchPage> {
             items: startHourList
                 .map(
                   (x) => DropdownMenuItem<DateTime>(
-                    child: Text(x.year.toString()),
+                    child: Text(dateTimeToHour(x)),
                     value: x,
                   ),
                 )
@@ -141,6 +123,7 @@ class _SearchPageState extends State<SearchPage> {
             onChanged: (DateTime val) {
               setState(() {
                 selectedStartHour = val;
+                initializeEndHourDropdown();
               });
             },
           ),
@@ -159,7 +142,7 @@ class _SearchPageState extends State<SearchPage> {
             items: endHourList
                 .map(
                   (x) => DropdownMenuItem<DateTime>(
-                    child: Text(x.year.toString()),
+                    child: Text(dateTimeToHour(x)),
                     value: x,
                   ),
                 )
@@ -183,10 +166,10 @@ class _SearchPageState extends State<SearchPage> {
       child: DropdownButtonHideUnderline(
         child: ButtonTheme(
           alignedDropdown: true,
-          child: DropdownButton<Resource>(
+          child: DropdownButton<ResourceType>(
             items: resourceList
                 .map(
-                  (x) => DropdownMenuItem<Resource>(
+                  (x) => DropdownMenuItem<ResourceType>(
                     child: Text(x.name),
                     value: x,
                   ),
@@ -194,7 +177,7 @@ class _SearchPageState extends State<SearchPage> {
                 .toList(),
             hint: Text('Recurso'),
             value: selectedResource,
-            onChanged: (Resource val) {
+            onChanged: (ResourceType val) {
               setState(() {
                 selectedResource = val;
               });
@@ -203,5 +186,73 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ),
     );
+  }
+
+  /* ===== LOGIC ===== */
+  Future fetchCampusList() async {
+    try {
+      var items = await CampusHttpService.getAllCampus();
+      setState(() {
+        campusList = items;
+      });
+    } catch (e) {
+      debugPrint("ERROR");
+    }
+  }
+
+  Future initializeStartHourDropdown() async {
+    var now = DateTime.now();
+    var minutes = (now.minute < 30) ? 0 : 30;
+
+    var timeIterator =
+        DateTime(now.year, now.month, now.day, now.hour, minutes);
+
+    var counter = (minutes == 0) ? 4 : 3;
+
+    startHourList =
+        generateDateTimeList(timeIterator, counter, Duration(minutes: 30));
+  }
+
+  Future initializeEndHourDropdown() async {
+    var iterator = selectedStartHour.add(Duration(minutes: 30));
+
+    endHourList = List<DateTime>();
+    for (var item in startHourList) {
+      if (item.difference(iterator).inMinutes >= 0) {
+        endHourList.add(item);
+      }
+    }
+
+    endHourList.add(startHourList.last.add(Duration(minutes: 30)));
+  }
+
+  Future fetchResourceList() async {
+    try {
+      var items = await ResourceTypeHttpService.getAllResources();
+      setState(() {
+        resourceList = items;
+      });
+    } catch (e) {
+      debugPrint("ERROR");
+    }
+  }
+
+  String dateTimeToHour(DateTime date) {
+    var formater = DateFormat("HH:mm");
+
+    return formater.format(date);
+  }
+
+  List<DateTime> generateDateTimeList(
+      DateTime startTime, int count, Duration duration) {
+    var iterator = startTime;
+    var result = List<DateTime>();
+
+    for (var i = 0; i < count; ++i) {
+      result.add(iterator);
+      iterator = iterator.add(duration);
+    }
+
+    return result;
   }
 }
