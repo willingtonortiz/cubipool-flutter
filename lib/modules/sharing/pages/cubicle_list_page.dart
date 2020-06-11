@@ -1,21 +1,42 @@
+import 'package:cubipool/dtos/publications/publication_response_dto.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
 
 class CubicleListPage extends StatefulWidget {
+  final List<PublicationResponseDto> publications;
+  final Function onBackEvent;
+  CubicleListPage({@required this.publications, @required this.onBackEvent});
+
   @override
-  _CubicleListPageState createState() => _CubicleListPageState();
+  _CubicleListPageState createState() => _CubicleListPageState(
+      publications: this.publications, onBackEvent: this.onBackEvent);
 }
 
 class _CubicleListPageState extends State<CubicleListPage> {
+  final List<PublicationResponseDto> publications;
+  final Function onBackEvent;
 
-  // TODO: Obtener información del api
+  _CubicleListPageState(
+      {@required this.publications, @required this.onBackEvent});
+
   @override
   Widget build(BuildContext context) {
-    return ListView(children: List.generate(10, (index) => buildCard()));
+    return WillPopScope(
+        onWillPop: () async {
+          onBackEvent();
+          return false;
+        },
+        child: ListView(
+            children: publications.map((x) => _buildCard(x)).toList()));
   }
 
-  // TODO: Add params
-  Card buildCard() {
+  Card _buildCard(PublicationResponseDto publication) {
+    var formater = DateFormat.Hm();
+
+    var startEndTime =
+        '${formater.format(publication.publicationStartTime)} - ${formater.format(publication.publicationEndTime)}';
+
     return Card(
       elevation: 3,
       margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
@@ -38,7 +59,7 @@ class _CubicleListPageState extends State<CubicleListPage> {
                           height: 20.0,
                         ),
                         SizedBox(width: 8.0),
-                        Text('Cubículo 103'),
+                        Text('Cubículo ${publication.cubicleCode}'),
                       ],
                     ),
                     SizedBox(height: 4.0),
@@ -49,14 +70,14 @@ class _CubicleListPageState extends State<CubicleListPage> {
                           size: 20.0,
                         ),
                         SizedBox(width: 8.0),
-                        Text('10:00 - 12:00'),
+                        Text(startEndTime),
                       ],
                     ),
                     SizedBox(height: 4.0),
                     Padding(
                       padding: EdgeInsets.only(left: 30.0),
                       child: Text(
-                        'Lorem ipsum dolor sin amet lorem ipsum dolor sin amet lorem ipsum dolor sin amet lorem ipsum dolor sin amet lorem ipsum dolor sin amet lorem ipsum dolor sin amet lorem ipsum dolor sin amet lorem ipsum dolor sin amet lorem ipsum dolor sin amet ',
+                        publication.description,
                         textAlign: TextAlign.left,
                         maxLines: 3,
                       ),

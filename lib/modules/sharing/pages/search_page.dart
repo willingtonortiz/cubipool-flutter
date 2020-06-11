@@ -1,26 +1,41 @@
+import 'package:cubipool/dtos/publications/publication_response_dto.dart';
 import 'package:cubipool/models/campus.dart';
 import 'package:cubipool/models/resource_type.dart';
 import 'package:cubipool/services/campus/campus_http_service.dart';
+import 'package:cubipool/services/publications/publication_http_service.dart';
 import 'package:cubipool/services/resource_type/resource_type_http_service.dart';
 import 'package:expandable/expandable.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class SearchPage extends StatefulWidget {
+  final Function(List<PublicationResponseDto> publications) onPublicationsFound;
+
+  SearchPage({@required this.onPublicationsFound});
+
   @override
-  _SearchPageState createState() => _SearchPageState();
+  _SearchPageState createState() =>
+      _SearchPageState(onPublicationsFound: this.onPublicationsFound);
 }
 
 class _SearchPageState extends State<SearchPage> {
+  final Function(List<PublicationResponseDto> publications) onPublicationsFound;
+
+  _SearchPageState({@required this.onPublicationsFound});
+
+  // Lista de campus
   List<Campus> campusList = [];
   Campus selectedCampus;
 
+  // Lista de horas de inicio
   List<DateTime> startHourList = [];
   DateTime selectedStartHour;
 
+  // Lista de horas de fin
   List<DateTime> endHourList = [];
   DateTime selectedEndHour;
 
+  // Lista de recursos
   List<ResourceType> resourceList = [];
   ResourceType selectedResource;
 
@@ -39,43 +54,32 @@ class _SearchPageState extends State<SearchPage> {
         children: <Widget>[
           Container(
             margin: const EdgeInsets.symmetric(vertical: 32.0),
-            height: 120.0,
-            child: Image.asset('assets/images/books.png'),
+            child: Image.asset('assets/images/books.png', height: 120.0),
           ),
           SizedBox(height: 20.0),
-          buildCampusDropdown(),
+          _buildCampusDropdown(),
           SizedBox(height: 20.0),
-          buildStartHourDropdown(),
+          _buildStartHourDropdown(),
           SizedBox(height: 20.0),
-          buildEndHourDropdown(),
+          _buildEndHourDropdown(),
           SizedBox(height: 20.0),
           Container(
             width: 300.0,
             child: ExpandablePanel(
               header: Text('Más opciones'),
               expanded: Center(
-                child: buildResourcesDropdown(),
+                child: _buildResourcesDropdown(),
               ),
             ),
           ),
           SizedBox(height: 20.0),
-          RaisedButton(
-            child: Text(
-              'Buscar',
-              style: TextStyle(color: Colors.white),
-            ),
-            color: Colors.red,
-            onPressed: () {
-              // TODO: Mover a la siguiente pantalla
-              // TODO Hacer la llamada al api
-            },
-          ),
+          _buildSearchButton(context)
         ],
       ),
     );
   }
 
-  Container buildCampusDropdown() {
+  Container _buildCampusDropdown() {
     return Container(
       width: 250.0,
       child: DropdownButtonHideUnderline(
@@ -85,7 +89,7 @@ class _SearchPageState extends State<SearchPage> {
             items: campusList
                 .map(
                   (campus) => DropdownMenuItem<Campus>(
-                    child: Text(campus.name),
+                    child: Text(campus.name.toUpperCase()),
                     value: campus,
                   ),
                 )
@@ -103,7 +107,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Container buildStartHourDropdown() {
+  Container _buildStartHourDropdown() {
     return Container(
       width: 250.0,
       child: DropdownButtonHideUnderline(
@@ -132,7 +136,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Container buildEndHourDropdown() {
+  Container _buildEndHourDropdown() {
     return Container(
       width: 250.0,
       child: DropdownButtonHideUnderline(
@@ -160,7 +164,7 @@ class _SearchPageState extends State<SearchPage> {
     );
   }
 
-  Container buildResourcesDropdown() {
+  Container _buildResourcesDropdown() {
     return Container(
       width: 250.0,
       child: DropdownButtonHideUnderline(
@@ -170,7 +174,7 @@ class _SearchPageState extends State<SearchPage> {
             items: resourceList
                 .map(
                   (x) => DropdownMenuItem<ResourceType>(
-                    child: Text(x.name),
+                    child: Text(x.name.toUpperCase()),
                     value: x,
                   ),
                 )
@@ -186,6 +190,47 @@ class _SearchPageState extends State<SearchPage> {
         ),
       ),
     );
+  }
+
+  RaisedButton _buildSearchButton(BuildContext context) => RaisedButton(
+        child: Text(
+          'Buscar',
+          style: TextStyle(color: Colors.white),
+        ),
+        color: Colors.red,
+        onPressed: () async {
+          // El campus no puede ser nulo
+          if (selectedCampus == null) {
+            showSnackBar(context, 'Debe elegir un campus');
+            return;
+          }
+
+          // La hora de inicio no puede ser nula
+          if (selectedStartHour == null) {
+            showSnackBar(context, 'Debe elegir una Hora de inicio');
+            return;
+          }
+
+          try {
+            var items = await PublicationsHttpService.getAllByFilters(
+                selectedCampus.id, selectedStartHour,
+                seatEndTime: selectedEndHour);
+
+            if (items.length == 0) {
+              showSnackBar(context, 'No se encontraron publicaciones');
+              return;
+            }
+            onPublicationsFound(items);
+          } catch (e) {
+            showSnackBar(context, 'Ocurrio un error');
+          }
+        },
+      );
+
+  void showSnackBar(BuildContext context, String text) {
+    Scaffold.of(context).showSnackBar(SnackBar(
+      content: Text(text),
+    ));
   }
 
   /* ===== LOGIC ===== */

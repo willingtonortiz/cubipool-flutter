@@ -1,3 +1,4 @@
+import 'package:cubipool/dtos/publications/publication_response_dto.dart';
 import 'package:cubipool/modules/sharing/pages/cubicle_detail_page.dart';
 import 'package:cubipool/modules/sharing/pages/cubicle_list_page.dart';
 import 'package:cubipool/modules/sharing/pages/search_page.dart';
@@ -11,6 +12,12 @@ class SharingPage extends StatefulWidget {
 }
 
 class _SharingPageState extends State<SharingPage> {
+  List<PublicationResponseDto> publications;
+
+  final controller = PageController(
+    initialPage: 0,
+  );
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -18,7 +25,37 @@ class _SharingPageState extends State<SharingPage> {
         title: Text('Buscar cubículos compartidos'),
         centerTitle: true,
       ),
-      body: SearchPage(),
+      body: PageView(
+        controller: controller,
+        physics: NeverScrollableScrollPhysics(),
+        children: <Widget>[
+          SearchPage(
+            onPublicationsFound: (List<PublicationResponseDto> result) {
+              setState(() {
+                publications = result;
+              });
+              goToNextPage();
+            },
+          ),
+          CubicleListPage(
+            publications: publications,
+            onBackEvent: () {
+              goToPreviousPage();
+            },
+          ),
+          CubicleDetailPage()
+        ],
+      ),
     );
+  }
+
+  void goToNextPage() {
+    var nextPageId = controller.page.toInt() + 1;
+    controller.jumpToPage(nextPageId);
+  }
+
+  void goToPreviousPage() {
+    var previousPageId = controller.page.toInt() - 1;
+    controller.jumpToPage(previousPageId);
   }
 }

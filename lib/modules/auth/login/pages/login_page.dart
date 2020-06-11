@@ -137,7 +137,7 @@ class _LoginPageState extends State<LoginPage> {
           try {
             // Realizando login
             var token = await AuthService.login(username, password);
-
+						token = token.substring(1, token.length - 1);
             // Guardando el token del usuario en SharedPreferences
             await AuthSharedPreferences.saveUserToken(token);
 
