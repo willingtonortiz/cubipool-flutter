@@ -13,6 +13,7 @@ class SharingPage extends StatefulWidget {
 
 class _SharingPageState extends State<SharingPage> {
   List<PublicationResponseDto> publications;
+  PublicationResponseDto selectedPublication;
 
   final controller = PageController(
     initialPage: 0,
@@ -39,11 +40,22 @@ class _SharingPageState extends State<SharingPage> {
           ),
           CubicleListPage(
             publications: publications,
-            onBackEvent: () {
-              goToPreviousPage();
+            onItemSelected: (PublicationResponseDto item) {
+              setState(() {
+                selectedPublication = item;
+              });
+              goToNextPage();
             },
+            onBackEvent: () => goToPreviousPage(),
           ),
-          CubicleDetailPage()
+          CubicleDetailPage(
+            publication: selectedPublication,
+            onBackEvent: () => goToPreviousPage(),
+            onContinuePressed: (PublicationResponseDto item) {
+              // TODO: Implementar elegir recursos para el cubiculo
+              debugPrint("TODO");
+            },
+          )
         ],
       ),
     );

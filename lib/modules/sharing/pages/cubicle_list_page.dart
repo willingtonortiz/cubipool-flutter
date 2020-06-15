@@ -5,20 +5,33 @@ import 'package:intl/intl.dart';
 
 class CubicleListPage extends StatefulWidget {
   final List<PublicationResponseDto> publications;
+  final Function(PublicationResponseDto item) onItemSelected;
   final Function onBackEvent;
-  CubicleListPage({@required this.publications, @required this.onBackEvent});
+
+  CubicleListPage({
+    @required this.publications,
+    @required this.onBackEvent,
+    @required this.onItemSelected,
+  });
 
   @override
   _CubicleListPageState createState() => _CubicleListPageState(
-      publications: this.publications, onBackEvent: this.onBackEvent);
+        publications: this.publications,
+        onBackEvent: this.onBackEvent,
+        onItemSelected: this.onItemSelected,
+      );
 }
 
 class _CubicleListPageState extends State<CubicleListPage> {
   final List<PublicationResponseDto> publications;
   final Function onBackEvent;
+  final Function(PublicationResponseDto item) onItemSelected;
 
-  _CubicleListPageState(
-      {@required this.publications, @required this.onBackEvent});
+  _CubicleListPageState({
+    @required this.publications,
+    @required this.onBackEvent,
+    @required this.onItemSelected,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -41,7 +54,9 @@ class _CubicleListPageState extends State<CubicleListPage> {
       elevation: 3,
       margin: EdgeInsets.symmetric(horizontal: 8.0, vertical: 4.0),
       child: InkWell(
-        onTap: () {},
+        onTap: () {
+          onItemSelected(publication);
+        },
         child: Padding(
           padding: EdgeInsets.all(8.0),
           child: Row(

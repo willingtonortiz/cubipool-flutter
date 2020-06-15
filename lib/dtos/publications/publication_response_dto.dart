@@ -1,13 +1,10 @@
-import 'package:flutter/cupertino.dart';
-import 'package:intl/intl.dart';
-
 class PublicationResponseDto {
   int id;
   String cubicleCode;
   String description;
   DateTime publicationStartTime;
   DateTime publicationEndTime;
-	int campusId;
+  int campusId;
 
   PublicationResponseDto({
     this.id,
@@ -26,15 +23,9 @@ class PublicationResponseDto {
     id = json['id'];
     cubicleCode = json['cubicleCode'];
     description = json['description'];
-    publicationStartTime = DateTime.parse(json['publicationStartTime']).toLocal();
+    publicationStartTime =
+        DateTime.parse(json['publicationStartTime']).toLocal();
     publicationEndTime = DateTime.parse(json['publicationEndTime']).toLocal();
-		campusId = json['campusId'];
+    campusId = json['campusId'];
   }
 }
-
-/*
-id = json['id'];
-        cubicleCode = json['cubicleCode'],
-        description = json['description'],
-        publicationStartTime = json['publicationStartTime'],
-        publicationEndTime = json['publicationEndTime']; */
