@@ -1,37 +1,77 @@
+import 'package:cubipool/modules/reservation/models/cubicle_details.dart';
+import 'package:cubipool/modules/reservation/models/cubicle_results.dart';
+import 'package:cubipool/services/resources/resources_http_service.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class CubicleListPage extends StatefulWidget {
+  CubicleResults Function() getCubicleResults;
+  Function increasePageIndex;
+  Function setCubicleDetails;
+
+  CubicleListPage(
+      this.getCubicleResults, this.increasePageIndex, this.setCubicleDetails);
+
   @override
   _CubicleListPageState createState() => _CubicleListPageState();
 }
 
 class _CubicleListPageState extends State<CubicleListPage> {
-  // TODO: Obtener información del api
   @override
-  Widget build(BuildContext context) {
-    return ListView(children: List.generate(10, (index) => buildNewRow()));
+  void initState() {
+    super.initState();
   }
 
-  Container buildNewRow() {
+  Future goToCubicleDetailsPage(CubicleInfo cubicle) async {
+    try {
+      final resources =
+          await ResourceHttpService.getResourcesByCubicleId(cubicle.id);
+      final cubicleResults = widget.getCubicleResults();
+      final cubicleDetails = CubicleDetails(
+          campus: cubicleResults.campus,
+          code: cubicle.code,
+          id: cubicle.id,
+          isToday: cubicleResults.isToday,
+          startHourDateTime: cubicleResults.startDateTime,
+          totalHours: cubicleResults.totalHours,
+          totalSeats: cubicleResults.totalSeats,
+          resourceTypeIds: resources.map((e) => e.resourceTypeId).toList());
+      widget.setCubicleDetails(cubicleDetails);
+
+      widget.increasePageIndex();
+    } catch (e) {
+      debugPrint("goToCubicleDetailsPage ${e.toString()}");
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return ListView(
+      children: widget
+          .getCubicleResults()
+          .cubicles
+          .map((cubicle) => buildNewRow(cubicle))
+          .toList(),
+    );
+  }
+
+  Container buildNewRow(CubicleInfo cubicle) {
     return Container(
       child: Column(
         children: <Widget>[
           InkWell(
-            onTap: () {},
+            onTap: () {
+              goToCubicleDetailsPage(cubicle);
+            },
             child: Padding(
               padding: EdgeInsets.all(16.0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.start,
                 children: <Widget>[
-                	// TODO: Cambiar el icono del escritorio por algor que represente un cubiculo
-                  Image.asset(
-                    'assets/images/desk.png',
-                    height: 20.0,
-                  ),
+                  Icon(Icons.desktop_mac),
                   SizedBox(width: 16.0),
                   Text(
-                    'Cubículo 103',
+                    'Cubículo ${cubicle.code.substring(3)}',
                     style: TextStyle(fontSize: 20.0),
                   ),
                   Expanded(child: Container()),
