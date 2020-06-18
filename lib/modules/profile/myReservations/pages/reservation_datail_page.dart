@@ -81,6 +81,7 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
         ),
         body: Center(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               SizedBox(height: 50.0),
               Row(
@@ -91,7 +92,7 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
                     height: 20.0,
                   ),
                   SizedBox(width: 8.0),
-                  Text('Cubículo ' + this.reservation.cubicleCode)
+                  Text('Cubículo ${reservation.cubicleCode}'),
                 ],
               ),
               SizedBox(height: 12.0),
@@ -103,7 +104,8 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
                     size: 20.0,
                   ),
                   SizedBox(width: 8.0),
-                  Text(reservation.timeInterval()),
+                  Text(
+                      '${reservation.startTime.hour}:00 - ${reservation.endTime.hour}:00'),
                 ],
               ),
               SizedBox(height: 12.0),
@@ -115,7 +117,7 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
                     height: 16.0,
                   ),
                   SizedBox(width: 8.0),
-                  Text('Campus Villa'),
+                  Text('Campus ${reservation.campus}'),
                 ],
               ),
               SizedBox(height: 12.0),
@@ -123,22 +125,11 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(
-                    Icons.person,
+                    Icons.event_seat,
                     size: 20.0,
                   ),
                   SizedBox(width: 8.0),
-                  Text('10:00 - 12:00'),
-                ],
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/images/desk.png',
-                    height: 20.0,
-                  ),
-                  SizedBox(width: 8.0),
-                  Text('Cubículo ' + this.reservation.cubicleCode)
+                  Text('${reservation.seats} Asientos'),
                 ],
               ),
               SizedBox(height: 12.0),
@@ -146,23 +137,11 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(
-                    Icons.schedule,
+                    Icons.access_time,
                     size: 20.0,
                   ),
                   SizedBox(width: 8.0),
-                  Text('10:00 - 12:00'),
-                ],
-              ),
-              SizedBox(height: 12.0),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: <Widget>[
-                  Image.asset(
-                    'assets/images/building.png',
-                    height: 16.0,
-                  ),
-                  SizedBox(width: 8.0),
-                  Text('Campus Villa'),
+                  Text(reservation.date()),
                 ],
               ),
               SizedBox(height: 12.0),
@@ -170,11 +149,11 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: <Widget>[
                   Icon(
-                    Icons.person,
+                    Icons.access_time,
                     size: 20.0,
                   ),
                   SizedBox(width: 8.0),
-                  Text('10:00 - 12:00'),
+                  Text(reservation.state),
                 ],
               ),
               SizedBox(height: 48.0),
