@@ -1,5 +1,7 @@
 import 'package:cubipool/modules/reservation/pages/cubicle_detail_page.dart';
 import 'package:cubipool/modules/reservation/pages/cubicle_list_page.dart';
+import 'package:cubipool/modules/reservation/pages/search_page.dart';
+import 'package:cubipool/modules/sharing/pages/cubicle_list_page.dart';
 import 'package:flutter/material.dart';
 
 class ReservationPage extends StatefulWidget {

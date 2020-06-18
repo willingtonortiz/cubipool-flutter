@@ -1,4 +1,5 @@
 import 'package:cubipool/modules/auth/login/pages/login_page.dart';
+import 'package:cubipool/modules/profile/myReservations/pages/reservation_list_page.dart';
 import 'package:cubipool/modules/profile/rewards/pages/rewards_page.dart';
 import 'package:cubipool/services/auth/auth_shared_preferences.dart';
 import 'package:flutter/material.dart';
@@ -77,6 +78,7 @@ class _ProfilePageState extends State<ProfilePage> {
                       leading: Icon(Icons.book),
                       trailing: Icon(Icons.chevron_right),
                       onTap: () {
+                        Navigator.of(context).pushNamed(MyReservationsPage.route);
                         // TODO: Navegar hacia la siguiente pagina
                       },
                     ),
