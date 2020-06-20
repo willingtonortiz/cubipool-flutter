@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:cubipool/modules/profile/request/pages/history_request_list_page.dart';
+import 'package:cubipool/modules/profile/request/pages/accepted_request_list_page.dart';
 
 class RequestListPage extends StatefulWidget {
   @override
@@ -43,7 +44,7 @@ class _RequestListPageState extends State<RequestListPage> {
           leading: Icon(Icons.book),
           title: Text('Solicitudes Aceptadas'),
           trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () => navegarHistorialSolicitudes(),
+          onTap: () => navegarHistorialAceptadas(),
         ),
       ],
     );
@@ -65,7 +66,7 @@ class _RequestListPageState extends State<RequestListPage> {
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
-          return new HistoryRequestListPage();
+          return new AcceptedRequestListPage();
         },
       ),
     );
