@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:cubipool/modules/profile/request/pages/history_request_list_page.dart';
 
 class RequestListPage extends StatefulWidget {
   @override
@@ -36,13 +37,13 @@ class _RequestListPageState extends State<RequestListPage> {
           leading: Icon(Icons.history),
           title: Text('Historial de solicitudes'),
           trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () => _navegarDetalleAsistencias(),
+          onTap: () => navegarHistorialSolicitudes(),
         ),
         ListTile(
           leading: Icon(Icons.book),
           title: Text('Solicitudes Aceptadas'),
           trailing: Icon(Icons.keyboard_arrow_right),
-          onTap: () => _navegarDetalleAsistencias(),
+          onTap: () => navegarHistorialSolicitudes(),
         ),
       ],
     );
@@ -50,21 +51,21 @@ class _RequestListPageState extends State<RequestListPage> {
 
   // ---- Navegación ----
 
-  void _navegarDetalleAsistencias() {
+  void navegarHistorialSolicitudes() {
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
-//          return new Page(persona: persona);
+          return new HistoryRequestListPage();
         },
       ),
     );
   }
 
-  void _navegarMasOpciones() {
+  void navegarHistorialAceptadas() {
     Navigator.of(context).push(
       new MaterialPageRoute(
         builder: (c) {
-//          return new Page(persona: persona);
+          return new HistoryRequestListPage();
         },
       ),
     );
