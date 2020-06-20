@@ -1,13 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:cubipool/environment/url.dart';
 
 class AuthService {
   AuthService();
 
   static Future<String> login(String username, String password) async {
     var response = await http.post(
-      'http://10.0.2.2:5000/api/auth/login',
+      '$BASE_URL/api/auth/login',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',
@@ -24,7 +25,7 @@ class AuthService {
 
   static Future<String> register(String username, String password) async {
     var response = await http.post(
-      'http://10.0.2.2:5000/api/auth/register',
+      '$BASE_URL/api/auth/register',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json',

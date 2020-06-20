@@ -2,11 +2,12 @@ import 'dart:convert';
 
 import 'package:cubipool/models/resource_type.dart';
 import 'package:http/http.dart' as http;
+import 'package:cubipool/environment/url.dart';
 
 class ResourceTypeHttpService {
   static Future<List<ResourceType>> getAllResources() async {
     var response = await http.get(
-      'http://10.0.2.2:5000/api/resourceType',
+      '$BASE_URL/api/resourceType',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'
