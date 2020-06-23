@@ -20,7 +20,7 @@ class CubiclesHttpService {
 
     final url = '$BASE_URL/api/Cubicle/byFilters?' +
         'CampusId=$campusId&' +
-        'StartTime=${startTime.toUtc().toIso8601String()}&' +
+        'StartTime=${startTime.toIso8601String()}&' +
         'ReservationHours=$hours&' +
         'TotalSeats=$totalSeats';
 

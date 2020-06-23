@@ -28,11 +28,11 @@ class PublicationsHttpService {
     }
 
     var url =
-        '$BASE_URL/publications/search?campusId=$campusId&seatStartTime=${seatStartTime.toUtc().toIso8601String()}';
+        '$BASE_URL/publications/search?campusId=$campusId&seatStartTime=${seatStartTime.toIso8601String()}';
 
     // Agregando hora de fin
     if (seatEndTime != null) {
-      url += '&seatEndTime=${seatEndTime.toUtc().toIso8601String()}';
+      url += '&seatEndTime=${seatEndTime.toIso8601String()}';
     }
 
     // Agregando tipo de recurso elegido

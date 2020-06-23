@@ -37,8 +37,8 @@ class Publication{
 	}
 
 	Map<String, dynamic> toJson() => {
-		'startTime': startTime.toUtc().toIso8601String(),
-		'endTime': endTime.toUtc().toIso8601String(),
+		'startTime': startTime.toIso8601String(),
+		'endTime': endTime.toIso8601String(),
 		'sharedSeats': sharedSeats,
 		'reservationId': reservationId,
 		'description': description,
