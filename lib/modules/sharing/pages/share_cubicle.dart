@@ -228,10 +228,10 @@ class _ShareCubiclePage extends State<ShareCubiclePage> {
 					icon: Icon(Icons.access_time),
 					hintText: 'Seleccione hora inicial para compartir',
 					labelText: 'Hora de inicio'),
-				value: selectedReservationHour,
+				value: selectedStartHour,
 				onChanged: (startHour) {
 					setState(() {
-						selectedReservationHour = startHour;
+						selectedStartHour = startHour;
 						initializeEndHourDropdown();
 					});
 				},
@@ -366,7 +366,7 @@ class _ShareCubiclePage extends State<ShareCubiclePage> {
 					showSnackBar(ctx, 'Compartido 🎉');
 					}catch(e)
 				{
-					showSnackBar(ctx, 'Hubo un error al registrarse');
+					showSnackBar(ctx, 'Hubo un error al compartir');
 				}
 
 				},
