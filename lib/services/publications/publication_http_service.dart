@@ -2,6 +2,7 @@ import 'dart:convert';
 
 import 'package:cubipool/dtos/publications/publication_response_dto.dart';
 import 'package:cubipool/environment/url.dart';
+import 'package:cubipool/models/publication.dart';
 
 import 'package:cubipool/services/auth/auth_shared_preferences.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,4 +61,36 @@ class PublicationsHttpService {
       throw Exception(response.body);
     }
   }
+
+  static Future<Publication>  postPublication(Publication publication) async
+	{
+		var token = await AuthSharedPreferences.getUserToken();
+		var url =
+			'$BASE_URL/api/Publication';
+		var bd=json.decode(json.encoder.convert(publication));
+		if (token == null) {
+			throw Exception("Token del usuario no encontrado");
+		}
+			final response = await http.post(url,
+				headers: {
+					'Content-Type': 'application/json',
+					'Accept': 'application/json',
+					'Authorization': 'Bearer $token'
+				},
+				body: json.encoder.convert(publication));
+
+			if (response.statusCode != 200) {
+				throw Exception('${json.decode(response.body)['error']}');
+			}
+
+			if(response.statusCode == 200)
+			{
+
+				Publication pb=Publication.fromJson(json.decode(response.body));
+				return publication;
+			} else {
+				throw Exception('getNotReservedCubiclesByFilters ${response.body}');
+			}
+
+	}
 }

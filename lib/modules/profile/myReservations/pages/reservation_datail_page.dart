@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:barcode_scan/platform_wrapper.dart';
 import 'package:cubipool/models/reservation.dart';
 import 'package:cubipool/modules/learn/qr_flutter/pages/scan_page.dart';
+import 'package:cubipool/modules/sharing/pages/share_cubicle.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
@@ -21,6 +22,7 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
   final Reservation reservation;
   String barCode = "";
   String btnActivateText = "";
+  String btnShare="Compartir Cubiculo";
   bool isBtnActivateDisabled = true;
   Timer timer;
 
@@ -172,6 +174,14 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
                   style: TextStyle(color: Colors.white),
                 ),
               ),
+							RaisedButton(
+								color: Colors.red,
+								onPressed: share,
+								child: Text(
+									"Compartir Cubiculo",
+									style: TextStyle(color: Colors.white),
+								),
+							),
             ],
           ),
         ),
@@ -249,4 +259,11 @@ class _ReservationDetailPage extends State<ReservationDetailPage> {
       });
     }
   }
+
+	Future share() async {
+			Navigator.of(context).push(MaterialPageRoute(
+				builder: (context) => ShareCubiclePage(reservation)));
+	}
+
+
 }

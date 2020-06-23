@@ -3,6 +3,7 @@ import 'package:cubipool/dtos/reservation/reservation_response_dto.dart';
 class Reservation {
   int id;
   String cubicleCode;
+  int cubicleId;
   DateTime startTime;
   DateTime endTime;
   String campus;
@@ -16,11 +17,12 @@ class Reservation {
       this.endTime,
       this.campus,
       this.seats,
-      this.state});
+      this.state,
+			this.cubicleId});
 
   @override
   String toString() {
-    return 'Reservation { id=$id, cubicleCode=$cubicleCode, startTime=$startTime, endTime=$endTime, campus=$campus, seats=$seats, state=$state}';
+    return 'Reservation { id=$id, cubicleCode=$cubicleCode, startTime=$startTime, endTime=$endTime, campus=$campus, seats=$seats, state=$state, cubicleId=$cubicleId}';
   }
 
   Reservation.fromReservationDTO(
@@ -32,6 +34,7 @@ class Reservation {
     campus = "Villa";
     seats = 6;
     state = reservationResponseDto.status;
+    cubicleId=reservationResponseDto.cubicleId;
   }
 
   String timeInterval() {

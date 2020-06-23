@@ -31,6 +31,7 @@ class ReservationService {
     if (response.statusCode == 200) {
       try {
         List<dynamic> items = json.decode(response.body);
+        print(items.toString());
         List<Reservation> resp = items
             .map((e) => Reservation.fromReservationDTO(
                 ReservationResponseDto.fromJson(e)))

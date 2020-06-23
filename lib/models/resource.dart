@@ -1,3 +1,5 @@
+import 'package:cubipool/services/resources/resources_http_service_dtos.dart';
+
 class Resource {
   int id;
   String name;
@@ -12,4 +14,10 @@ class Resource {
   Resource.fromJson(dynamic json)
       : id = json['id'],
         name = json['name'];
+
+	Resource.fromDTO(GetResourcesByCubicleIdResponse response)
+	{
+		id=response.id;
+		name=response.name;
+	}
 }

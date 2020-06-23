@@ -302,7 +302,7 @@ class _SearchPageState extends State<SearchPage> {
       ),
       color: Colors.red,
       onPressed: () {
-        goToCubicleListPage();
+      goToCubicleListPage();
       },
     );
   }
