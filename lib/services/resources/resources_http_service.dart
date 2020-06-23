@@ -9,7 +9,7 @@ import 'package:cubipool/models/resource.dart';
 class ResourceHttpService {
   static Future<List<Resource>> getAllResources() async {
     var response = await http.get(
-      'http://10.0.2.2:5000/api/resources',
+      '$BASE_URL:5000/api/resources',
       headers: {
         'Content-Type': 'application/json',
         'Accept': 'application/json'

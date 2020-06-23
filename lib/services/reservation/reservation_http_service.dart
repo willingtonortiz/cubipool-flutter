@@ -18,7 +18,7 @@ class ReservationService {
     }
     debugPrint(token);
     var response = await http
-        .get('http://10.0.2.2:5000/api/users/1/reservations', headers: {
+        .get('$BASE_URL/api/users/1/reservations', headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
