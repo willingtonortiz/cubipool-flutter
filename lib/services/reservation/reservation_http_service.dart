@@ -56,7 +56,7 @@ class ReservationService {
     }
     debugPrint("Realizando  request completed");
     var response = await http
-        .get('http://10.0.2.2:5000/api/users/reservationsCompleted', headers: {
+        .get('$BASE_URL/api/users/reservationsCompleted', headers: {
       'Content-Type': 'application/json',
       'Accept': 'application/json',
       'Authorization': 'Bearer $token'
